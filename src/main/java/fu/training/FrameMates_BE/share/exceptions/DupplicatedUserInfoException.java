@@ -1,6 +1,6 @@
 package fu.training.FrameMates_BE.share.exceptions;
 
-public class DupplicatedUserInfoException extends Exception{
+public class DupplicatedUserInfoException extends RuntimeException{
     private static final long serialVersionUID = 1L;
 
     private String[] messages;

@@ -1,9 +1,12 @@
 package fu.training.FrameMates_BE.account;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Set;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import fu.training.FrameMates_BE.order.Order;
+import fu.training.FrameMates_BE.share.entities.SoftDeleteEntity;
 import fu.training.FrameMates_BE.studio.Studio;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
@@ -12,6 +15,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 
 @Getter
@@ -23,13 +29,13 @@ import lombok.ToString;
 @JsonSerialize
 @Entity
 @Table(name="account")
-public class Account implements Serializable {
+public class Account extends SoftDeleteEntity implements Serializable, UserDetails {
 	private static final long serialVersionUID = 6529685098267757690L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="account_id")
-	private Integer account_id;
+	private Integer accountId;
 	
 	@Column(name="avatar", length=Integer.MAX_VALUE)
 	private String avatar;
@@ -53,19 +59,49 @@ public class Account implements Serializable {
 	private Integer status;
 	
 	@Column(name="create_date")
-	private java.sql.Timestamp create_date;
+	private java.sql.Timestamp createDate;
 	
 	@ManyToOne(targetEntity=Account.class, fetch=FetchType.LAZY)
-	@JoinColumns(value={ @JoinColumn(name="admin_id", referencedColumnName="account_id", nullable=false) })
+	@JoinColumns(value={ @JoinColumn(name="admin_id", referencedColumnName="account_id", nullable=true) })
 	private Account admin;
 	
 	@OneToMany(mappedBy="owner", targetEntity= Studio.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<Studio> ORM_studio;
+	private Set<Studio> studios;
 	
 	@OneToMany(mappedBy="account", targetEntity= Order.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<Order> ORM_order;
+	private Set<Order> orders;
 	
 	@OneToMany(mappedBy="admin", targetEntity=Account.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<Account> ORM_account;
+	private Set<Account> accounts;
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return Collections.singleton(new SimpleGrantedAuthority(this.getRole()));
+	}
+
+	@Override
+	public String getUsername() {
+		return phone;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return !deleted;
+	}
 
 }

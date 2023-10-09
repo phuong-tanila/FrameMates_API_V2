@@ -8,5 +8,10 @@ import java.util.List;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, Integer> {
+    @Query("SELECT a FROM Account a WHERE a.phone = :credential OR a.email = :credential")
+    Account findByPhoneOrEmail(String credential);
+
+    @Query("SELECT a FROM Account a WHERE a.phone = :phone")
+    List<Account> findAllByPhone(String phone);
 
 }
