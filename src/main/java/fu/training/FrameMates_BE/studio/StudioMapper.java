@@ -13,4 +13,8 @@ import java.util.List;
 )
 public interface StudioMapper {
 
+    @Mapping(source = "studioId", target = "studioId", ignore = true)
+    Studio fromCreateModelToEntity(StudioModel model);
+
+    StudioModel toModel(Studio studio);
 }

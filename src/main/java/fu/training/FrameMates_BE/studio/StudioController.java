@@ -8,15 +8,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
 @Slf4j
-@CrossOrigin
 @RequestMapping("/api/studios")
 public class StudioController {
+    @Autowired
+    private StudioService studioService;
+    @PreAuthorize("hasRole('ROLE_CUS')")
+    @PostMapping
+    public ResponseEntity createStudio(
+            @RequestBody  StudioModel model,
+            Authentication authentication
+    ) throws URISyntaxException {
+        int studioId = studioService.createStudio(model, authentication);
+        return ResponseEntity.created(new URI("/api/studios/" + studioId)).build();
+    }
 
+    @GetMapping
+    public ResponseEntity<List<StudioModel>> getAllStudio(){
+        return ResponseEntity.ok(studioService.getAllStudioNotDeleted());
+    }
 }

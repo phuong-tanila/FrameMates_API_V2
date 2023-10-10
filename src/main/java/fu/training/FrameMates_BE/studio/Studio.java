@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import fu.training.FrameMates_BE.account.Account;
 import fu.training.FrameMates_BE.mediafile.MediaFile;
 import fu.training.FrameMates_BE.order.Order;
+import fu.training.FrameMates_BE.share.entities.SoftDeleteEntity;
 import fu.training.FrameMates_BE.slotbooking.SlotBooking;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
@@ -20,27 +21,26 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Transactional
 @JsonSerialize
 @Entity
 @Table(name="studio")
-public class Studio implements Serializable {
+public class Studio extends SoftDeleteEntity implements Serializable {
 	private static final long serialVersionUID = 6529685098267757690L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="studio_id")
-	private Integer studio_id;
+	private Integer studioId;
 	
 	@Column(name="name")
 	private String name;
 	
 	@Column(name="avatar_studio", length = Integer.MAX_VALUE)
-	private String avatar_studio;
+	private String avatarStudio;
 	
 	@Column(name="cover_image", length = Integer.MAX_VALUE)
-	private String cover_image;
+	private String coverImage;
 	
 	@Column(name="address", length = Integer.MAX_VALUE)
 	private String address;
@@ -52,18 +52,18 @@ public class Studio implements Serializable {
 	private Integer status;
 	
 	@Column(name="total_rating")
-	private Float total_rating;
+	private Float totalRating;
 	
-	@ManyToOne(targetEntity= Account.class, fetch=FetchType.LAZY)
+	@OneToOne(targetEntity= Account.class, fetch=FetchType.LAZY)
 	@JoinColumns(value={ @JoinColumn(name="owner", referencedColumnName="account_id") })
 	private Account owner;
 	
 	@OneToMany(mappedBy="studio", targetEntity= MediaFile.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<MediaFile> ORM_media_file;
+	private Set<MediaFile> mediaFiles;
 	
 	@OneToMany(mappedBy="studio", targetEntity= Order.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<Order> ORM_order;
+	private Set<Order> orders;
 	
-	@OneToMany(mappedBy="studio", targetEntity= SlotBooking.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<SlotBooking> ORM_slot_booking;
+	@OneToMany(mappedBy="studio", targetEntity= SlotBooking.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<SlotBooking> slotBookings;
 }

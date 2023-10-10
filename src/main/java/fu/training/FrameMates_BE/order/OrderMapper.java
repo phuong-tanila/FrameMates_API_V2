@@ -15,5 +15,9 @@ import java.util.List;
 )
 public interface OrderMapper {
 
+    @Mapping(source = "orderId", target = "orderId", ignore = true)
+    Order fromCreateModelToEntity(OrderModel model);
+
+    OrderModel toModel(Order order);
 
 }

@@ -19,7 +19,6 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Transactional
 @JsonSerialize
 @Entity
@@ -30,19 +29,19 @@ public class Order implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="order_id")
-	private Integer order_id;
+	private Integer orderId;
 	
 	@Column(name="order_date")
-	private java.sql.Timestamp order_date;
+	private java.sql.Timestamp orderDate;
 	
 	@Column(name="status")
 	private Integer status;
 	
 	@Column(name="payment_date")
-	private java.sql.Timestamp payment_date;
+	private java.sql.Timestamp paymentDate;
 	
 	@Column(name="total_price")
-	private Integer total_price;
+	private Integer totalPrice;
 	
 	@ManyToOne(targetEntity= Studio.class, fetch=FetchType.LAZY)
 	@JoinColumns(value={ @JoinColumn(name="studio_id", referencedColumnName="studio_id") })
@@ -54,6 +53,6 @@ public class Order implements Serializable {
 	private Account account;
 	
 	@OneToMany(mappedBy="order", targetEntity= OrderDetail.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<OrderDetail> ORM_order_detail;
+	private Set<OrderDetail> orderDetails;
 
 }

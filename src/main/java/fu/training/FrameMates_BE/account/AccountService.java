@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,6 +28,7 @@ public class AccountService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = accountRepository.findByPhoneOrEmail(username);
+
         if(account == null) throw new UsernameNotFoundException("Username or phone not found: " + username);
         return account;
     }
@@ -46,7 +48,7 @@ public class AccountService implements UserDetailsService {
 
 
     public void validateAccount(Account mappedAccount) {
-        List<Account> accountList = findAccountsByPhone(mappedAccount.getPhone());
+        List<Account> accountList = findAccountsByEmailOrPhone(mappedAccount.getEmail(), mappedAccount.getPhone());
         if(accountList != null && !accountList.isEmpty()) {
             Set<String> errorMessages = new HashSet<>();
             for (Account account: accountList) {
@@ -63,12 +65,21 @@ public class AccountService implements UserDetailsService {
     private void createAccount(AccountModel accountModel){
         accountModel.setPassword(passwordEncoder.encode(accountModel.getPassword()));
         var account = accountMapper.fromCreateModelToEntity(accountModel);
+        validateAccount(account);
+        account.setCreateDate(new Timestamp(System.currentTimeMillis()));
+        account.setDeleted(false);
         accountRepository.save(account);
     }
     public void createCustomer(AccountModel customer) {
         customer.setRole("CUS");
         createAccount(customer);
     }
+
+    public List<Account> findAccountsByEmailOrPhone(String email, String phone){
+        return accountRepository.findAllByEmailOrPhone(email, phone);
+    }
+
+
 
 
 }

@@ -27,16 +27,16 @@ public class OrderDetail implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="order_detail_id")
-	private Integer order_detail_id;
+	private Integer orderDetailId;
 	
 	@Column(name="price")
 	private Integer price;
 	
 	@Column(name="start_time")
-	private java.sql.Timestamp start_time;
+	private java.sql.Timestamp startTime;
 	
 	@Column(name="end_time")
-	private java.sql.Timestamp end_time;
+	private java.sql.Timestamp endTime;
 	
 	@Column(name="content", length=Integer.MAX_VALUE)
 	private String content;
@@ -45,7 +45,7 @@ public class OrderDetail implements Serializable {
 	private Integer rating;
 	
 	@Column(name="post_date")
-	private java.sql.Timestamp post_date;
+	private java.sql.Timestamp postDate;
 	
 	@ManyToOne(targetEntity=Order.class, fetch=FetchType.LAZY)
 	@JoinColumns(value={ @JoinColumn(name="order_id", referencedColumnName="order_id") })

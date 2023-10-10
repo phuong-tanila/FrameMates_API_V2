@@ -4,6 +4,7 @@ import fu.training.FrameMates_BE.account.AccountService;
 import fu.training.FrameMates_BE.account.JwtService;
 import fu.training.FrameMates_BE.account.TokenType;
 import fu.training.FrameMates_BE.share.exceptions.ExceptionResponse;
+import fu.training.FrameMates_BE.share.exceptions.MissingBearerTokenException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
@@ -38,13 +40,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 //        log.error(jwtService.toString());
 //        log.error(accountService.toString());
             // Lấy jwt từ request
-            if(isSecured(request)){
+            if(
+//                    isSecured(request)
+                    true
+            ){
                 String jwt = getJwtFromRequest(request);
+
                 if (StringUtils.hasText(jwt))  {
                     Claims claims = jwtService.getClaimsFromToken(TokenType.ACCESSTOKEN, jwt);
                     String userEmail = claims.getSubject();
                     UserDetails userDetails = accountService.loadUserByUsername(userEmail);
-//                System.out.println(userDetails);
+                    System.out.println(userDetails);
                     if(userDetails != null) {
                         UsernamePasswordAuthenticationToken
                                 authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

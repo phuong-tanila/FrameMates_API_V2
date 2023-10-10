@@ -24,7 +24,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @Transactional
 @JsonSerialize
 @Entity
@@ -65,8 +64,8 @@ public class Account extends SoftDeleteEntity implements Serializable, UserDetai
 	@JoinColumns(value={ @JoinColumn(name="admin_id", referencedColumnName="account_id", nullable=true) })
 	private Account admin;
 	
-	@OneToMany(mappedBy="owner", targetEntity= Studio.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<Studio> studios;
+	@OneToOne(mappedBy="owner", targetEntity= Studio.class, cascade = CascadeType.ALL)
+	private Studio studio;
 	
 	@OneToMany(mappedBy="account", targetEntity= Order.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private Set<Order> orders;
@@ -97,6 +96,22 @@ public class Account extends SoftDeleteEntity implements Serializable, UserDetai
 	@Override
 	public boolean isCredentialsNonExpired() {
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Account{" +
+				"accountId=" + accountId +
+				", avatar='" + avatar + '\'' +
+				", email='" + email + '\'' +
+				", full_name='" + full_name + '\'' +
+				", phone='" + phone + '\'' +
+				", password='" + password + '\'' +
+				", role='" + role + '\'' +
+				", status=" + status +
+				", createDate=" + createDate +
+				", deleted=" + deleted +
+				'}';
 	}
 
 	@Override

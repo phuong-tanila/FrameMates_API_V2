@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @Slf4j
-@CrossOrigin
 @RequestMapping("/api/auth")
 public class AccountController {
     @Autowired
