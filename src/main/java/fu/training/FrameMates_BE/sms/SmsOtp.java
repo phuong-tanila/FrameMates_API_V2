@@ -25,17 +25,17 @@ public class SmsOtp implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="otp_id")
-	private Integer otp_id;
+	private Integer otpId;
 	
 	@Column(name="create_at")
-	private java.sql.Timestamp create_at;
+	private java.sql.Timestamp createAt;
 	
 	@Column(name="expired_at")
-	private java.sql.Timestamp expired_at;
+	private java.sql.Timestamp expiredAt;
 	
 	@Column(name="otp_value")
-	private String otp_value;
+	private String otpValue;
 	
 	@Column(name="phone_number")
-	private String phone_number;
+	private String phoneNumber;
 }

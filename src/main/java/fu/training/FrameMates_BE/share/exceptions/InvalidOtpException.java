@@ -1,6 +1,6 @@
 package fu.training.FrameMates_BE.share.exceptions;
 
-public class InvalidOtpException extends  Exception{
+public class InvalidOtpException extends  RuntimeException{
     private static final long serialVersionUID = 1L;
 
     public InvalidOtpException(String message) {

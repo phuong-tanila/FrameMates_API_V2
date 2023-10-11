@@ -43,7 +43,7 @@ public class Account extends SoftDeleteEntity implements Serializable, UserDetai
 	private String email;
 	
 	@Column(name="full_name", length=Integer.MAX_VALUE)
-	private String full_name;
+	private String fullName;
 	
 	@Column(name="phone")
 	private String phone;
@@ -104,7 +104,7 @@ public class Account extends SoftDeleteEntity implements Serializable, UserDetai
 				"accountId=" + accountId +
 				", avatar='" + avatar + '\'' +
 				", email='" + email + '\'' +
-				", full_name='" + full_name + '\'' +
+				", full_name='" + fullName + '\'' +
 				", phone='" + phone + '\'' +
 				", password='" + password + '\'' +
 				", role='" + role + '\'' +

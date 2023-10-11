@@ -8,4 +8,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
 )
 public interface SmsOtpMapper {
+    SmsOtp toEntiy(SmsOtpModel model);
+
+    SmsOtpModel toModel(SmsOtp entity);
 }

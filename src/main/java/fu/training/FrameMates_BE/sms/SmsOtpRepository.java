@@ -7,5 +7,6 @@ import java.util.Optional;
 
 @Repository
 public interface SmsOtpRepository extends JpaRepository<SmsOtp, Integer> {
+    Optional<SmsOtp> findByOtpIdAndPhoneNumberAndOtpValue(int otpId, String phoneNumber, String otpValue);
 
 }
