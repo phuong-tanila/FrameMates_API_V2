@@ -42,31 +42,11 @@ public class SlotBooking extends SoftDeleteEntity implements Serializable {
 	@Column(name="price")
 	private Integer price;
 
+	@Column(name="slot_date", columnDefinition="DATE")
+	private Date slotDate;
+
 	@Column(name="booked")
 	private boolean booked;
-
-	@Column(name="monday")
-	private boolean monday;
-
-	@Column(name="tuesday")
-	private boolean tuesday;
-
-	@Column(name="wednesday")
-	private boolean wednesday;
-
-	@Column(name="thursday")
-	private boolean thursday;
-
-	@Column(name="friday")
-	private boolean friday;
-
-	@Column(name="saturday")
-	private boolean saturday;
-
-	@Column(name="sunday")
-	private boolean sunday;
-
-
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "slotBooking", cascade = CascadeType.ALL)
 	private List<OrderDetail> orderDetails;

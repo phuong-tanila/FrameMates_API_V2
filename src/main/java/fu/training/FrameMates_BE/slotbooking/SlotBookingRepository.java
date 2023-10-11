@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface SlotBookingRepository extends JpaRepository<SlotBooking, Integer> {
-
+    List<SlotBooking> findAllByStudio_StudioIdAndSlotDate(int studioId, Date slotDate);
 
     List<SlotBooking> findAllByStudio_StudioId(int studioId);
 }

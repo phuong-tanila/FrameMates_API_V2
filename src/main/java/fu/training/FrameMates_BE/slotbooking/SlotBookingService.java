@@ -34,9 +34,9 @@ public class SlotBookingService {
     public List<SlotBookingModel> getBookingSlotsByDate(int studioId, java.util.Date slotDate) {
         List<SlotBooking> slotBooking;
         System.out.println(slotDate);
-//        if(slotDate != null)
-//            slotBooking = slotBookingRepository.findAllByStudio_StudioIdAndSlotDate(studioId, slotDate);
-//        else
+        if(slotDate != null)
+            slotBooking = slotBookingRepository.findAllByStudio_StudioIdAndSlotDate(studioId, slotDate);
+        else
             slotBooking = slotBookingRepository.findAllByStudio_StudioId(studioId);
         return slotBooking.stream().map(slotBookingMapper::toModel).toList();
     }
