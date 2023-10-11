@@ -13,4 +13,6 @@ public interface SlotBookingMapper {
 
     @Mapping(source = "slotId", target = "slotId", ignore = true)
     SlotBooking fromCreateModelToEntity(SlotBookingModel model);
+
+    SlotBookingModel toModel(SlotBooking slotBooking);
 }

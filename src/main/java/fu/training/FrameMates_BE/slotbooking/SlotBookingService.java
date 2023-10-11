@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.List;
+
 @Service
 public class SlotBookingService {
     @Autowired
@@ -20,5 +23,14 @@ public class SlotBookingService {
         var entity = slotBookingMapper.fromCreateModelToEntity(model);
         entity.setStudio(currentStudio);
         return slotBookingRepository.save(entity).getSlotId();
+    }
+
+    public List<SlotBookingModel> getBookingSlotsByDate(int studioId, Date slotDate) {
+        List<SlotBooking> slotBooking;
+        if(slotDate != null)
+            slotBooking = slotBookingRepository.findAllByStudio_StudioIdAndSlotDate(studioId, slotDate);
+        else
+            slotBooking = slotBookingRepository.findAllByStudio_StudioId(studioId);
+        return slotBooking.stream().map(slotBookingMapper::toModel).toList();
     }
 }

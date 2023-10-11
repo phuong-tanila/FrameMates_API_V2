@@ -57,4 +57,10 @@ public class AccountController {
         );
         return ResponseEntity.ok().build();
     }
+    @GetMapping("/current")
+    public ResponseEntity getCurrentAccount(
+            Authentication authentication
+    ){
+        return ResponseEntity.ok(accountService.getCurrentAccount(authentication));
+    }
 }

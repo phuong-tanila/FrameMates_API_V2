@@ -5,6 +5,8 @@ import fu.training.FrameMates_BE.share.exceptions.DupplicatedUserInfoException;
 import fu.training.FrameMates_BE.share.exceptions.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -80,6 +82,8 @@ public class AccountService implements UserDetailsService {
     }
 
 
-
-
+    public AccountModel getCurrentAccount(Authentication authentication) {
+        var currentUser = (Account) authentication.getPrincipal();
+        return accountMapper.toModel(currentUser);
+    }
 }
