@@ -4,6 +4,7 @@ import fu.training.FrameMates_BE.account.Account;
 import fu.training.FrameMates_BE.orderdetail.OrderDetail;
 import fu.training.FrameMates_BE.orderdetail.OrderDetailMapper;
 import fu.training.FrameMates_BE.orderdetail.OrderDetailModel;
+import fu.training.FrameMates_BE.orderdetail.OrderDetailService;
 import fu.training.FrameMates_BE.share.exceptions.InvalidStatusStringException;
 import fu.training.FrameMates_BE.share.exceptions.MissingBearerTokenException;
 import fu.training.FrameMates_BE.share.exceptions.RecordNotFoundException;
@@ -27,6 +28,8 @@ public class  OrderService {
     @Autowired
     public OrderDetailMapper orderDetailMapper;
     @Autowired
+    private OrderDetailService orderDetailService;
+    @Autowired
     public StudioService studioService;
     public OrderModel createOrder(OrderModel orderModel, Authentication authentication){
         if(authentication == null) throw new MissingBearerTokenException();
@@ -40,15 +43,19 @@ public class  OrderService {
         List<OrderDetailModel> orderDetailModels = orderModel.getOrderDetails().stream().toList();
         Set<OrderDetail> orderDetails = new HashSet<>();
         int totalPrice = 0;
+        var createdOrder = orderRepository.save(creatingOrder);
+
         for (int i = 0; i < orderDetailModels.size(); i++) {
             var orderDetailModel = orderDetailModels.get(i);
             var orderDetailEntity = orderDetailMapper.toEntity(orderDetailModel);
+            orderDetailEntity.setOrder(createdOrder);
             orderDetails.add(orderDetailEntity);
             totalPrice += orderDetailEntity.getPrice();
+            orderDetailService.createOrderDetails(orderDetailEntity);
         }
         creatingOrder.setTotalPrice(totalPrice);
         creatingOrder.setStatus(OrderStatus.PENDING.ordinal());
-        var createdOrder = orderRepository.save(creatingOrder);
+        createdOrder = orderRepository.save(creatingOrder);
         return orderMapper.toModel(createdOrder);
     };
 

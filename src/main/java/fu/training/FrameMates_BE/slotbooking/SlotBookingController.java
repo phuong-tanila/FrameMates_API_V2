@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 @RestController
@@ -31,9 +33,16 @@ public class SlotBookingController {
     @GetMapping("{studioId}")
     public ResponseEntity<List<SlotBookingModel>> getSlotBooking(
             @PathVariable int studioId,
-            @RequestParam(value = "date", required = false) Date slotDate
-    ){
-        return ResponseEntity.ok(slotBookingService.getBookingSlotsByDate(studioId, slotDate));
+            @RequestParam(value = "date", required = false) String slotDate
+    ) throws ParseException {
+        Date parsedSlotDate = null;
+        if(slotDate != null){
+            parsedSlotDate = new SimpleDateFormat("yyyy-MM-dd").parse(slotDate);
+            parsedSlotDate.setHours(0);
+            parsedSlotDate.setMinutes(0);
+            parsedSlotDate.setSeconds(0);
+        }
+        return ResponseEntity.ok(slotBookingService.getBookingSlotsByDate(studioId, parsedSlotDate));
     }
 
 

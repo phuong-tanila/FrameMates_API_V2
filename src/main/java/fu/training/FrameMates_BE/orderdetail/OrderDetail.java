@@ -3,6 +3,8 @@ import java.io.Serializable;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import fu.training.FrameMates_BE.order.Order;
+import fu.training.FrameMates_BE.slotbooking.SlotBooking;
+import fu.training.FrameMates_BE.studio.Studio;
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -46,8 +48,11 @@ public class OrderDetail implements Serializable {
 	
 	@Column(name="post_date")
 	private java.sql.Timestamp postDate;
-	
-	@ManyToOne(targetEntity=Order.class, fetch=FetchType.LAZY)
-	@JoinColumns(value={ @JoinColumn(name="order_id", referencedColumnName="order_id") })
+
+	@ManyToOne(targetEntity= SlotBooking.class, cascade = CascadeType.ALL)
+	private SlotBooking slotBooking;
+
+	@ManyToOne(targetEntity=Order.class, fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumns(value={ @JoinColumn(name="order_id", referencedColumnName="order_id")})
 	private Order order;
 }

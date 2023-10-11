@@ -33,6 +33,7 @@ public class ApiExceptionHandler {
     public ResponseEntity<ExceptionResponse> handleIllegalArgumentException(
             IllegalArgumentException ex, WebRequest request
     ){
+        ex.printStackTrace();
         return new ResponseEntity<>(
                 new ExceptionResponse(
                     "Illegal argument",

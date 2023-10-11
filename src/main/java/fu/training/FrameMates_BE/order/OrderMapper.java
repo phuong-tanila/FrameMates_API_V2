@@ -17,7 +17,11 @@ public interface OrderMapper {
 
     @Mapping(source = "orderId", target = "orderId", ignore = true)
     Order fromCreateModelToEntity(OrderModel model);
-
+    @Mapping(source = "status", target = "status", qualifiedByName = "statusEnumToString")
+    @Mapping(source = "account.password", target = "account.password", ignore = true)
     OrderModel toModel(Order order);
-
+    @Named("statusEnumToString")
+    default String statusEnumToString(int status) {
+        return EnumConverter.convertEnumValueToString(status, OrderStatus.class);
+    }
 }

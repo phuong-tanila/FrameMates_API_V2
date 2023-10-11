@@ -31,12 +31,11 @@ public class AccountController {
                         request.getPassword()
                 )
         );
-
         String accessToken = jwtService.generateToken(TokenType.ACCESSTOKEN, (Account) authentication.getPrincipal());
         String refreshToken = jwtService.generateToken(TokenType.REFRESHTOKEN, (Account) authentication.getPrincipal());
         return new ResponseEntity<TokenResponse>(new TokenResponse(accessToken, refreshToken), HttpStatus.OK);
-
     }
+
     @PostMapping("/customer")
     public ResponseEntity createCustomer(@RequestBody @Valid AccountModel customer) throws JsonProcessingException, DupplicatedUserInfoException {
         accountService.createCustomer(customer);
