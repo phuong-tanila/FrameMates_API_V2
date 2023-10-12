@@ -33,7 +33,10 @@ public class Order implements Serializable {
 	
 	@Column(name="order_date")
 	private java.sql.Timestamp orderDate;
-	
+
+	@Column(name="description", nullable = true)
+	private String description;
+
 	@Column(name="status")
 	private Integer status;
 	

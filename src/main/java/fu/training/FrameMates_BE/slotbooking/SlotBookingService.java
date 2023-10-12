@@ -40,4 +40,9 @@ public class SlotBookingService {
             slotBooking = slotBookingRepository.findAllByStudio_StudioId(studioId);
         return slotBooking.stream().map(slotBookingMapper::toModel).toList();
     }
+
+    public SlotBooking getSlotBookingEntityById(int slotBookingId) {
+        return slotBookingRepository.findById(slotBookingId)
+                .orElseThrow(() -> new RecordNotFoundException("Slot booking id: " + slotBookingId + " not found"));
+    }
 }

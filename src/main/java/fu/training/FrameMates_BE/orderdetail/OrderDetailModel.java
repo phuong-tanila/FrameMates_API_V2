@@ -16,6 +16,8 @@ public class OrderDetailModel {
 
     private String content;
 
+    private int slotBookingId;
+
     private java.sql.Timestamp postDate;
 
     private java.sql.Timestamp startTime;

@@ -25,12 +25,12 @@ import java.util.List;
 public class OrderController {
     @Autowired
     private OrderService orderService;
-    @Secured({"ROLE_OWNER"})
-    public OrderModel getOrderByCurrentStudio(
-            Authentication authentication
-    ){
-        return null;
-    }
+//    @Secured({"ROLE_OWNER"})
+//    public List<OrderModel> getOrdersByCurrentStudio(
+//            Authentication authentication
+//    ){
+//        return orderService.getOrdersByCurrentStudio(authentication);
+//    }
 
     @Secured({"ROLE_CUS"})
     @PostMapping
@@ -54,6 +54,18 @@ public class OrderController {
             Authentication authentication
     ){
         return ResponseEntity.ok(orderService.getOrdersByCurrentUser(authentication));
+    }
+
+    @PatchMapping("/{id}/status/{status}")
+    public ResponseEntity changeOrderStatus(
+            Authentication authentication,
+            @PathVariable int id,
+            @PathVariable String status
+    ){
+
+
+        orderService.changeOrderStatus(id, status);
+        return ResponseEntity.ok().build();
     }
     @DeleteMapping("{orderId}")
     public ResponseEntity cancelOrder(

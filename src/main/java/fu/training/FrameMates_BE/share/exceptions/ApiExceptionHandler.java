@@ -89,6 +89,24 @@ public class ApiExceptionHandler {
 //        );
 //    }
 
+    @ExceptionHandler(NullPointerException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ExceptionResponse handleNullPointerException(
+            NullPointerException ex, WebRequest request
+    ){
+        if(ex.getMessage().contains("\"authentication\" is null"))
+            return new ExceptionResponse(
+                    "Missing bearer token",
+                    "Bearer token is required"
+            );
+        ex.printStackTrace();
+        return new ExceptionResponse(
+                "Null pointer exception",
+                "Null pointer exception, check console for more information"
+        );
+    }
+
+
     @ExceptionHandler(InvalidStatusStringException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity handleInvalidEnumString(
@@ -111,7 +129,7 @@ public class ApiExceptionHandler {
             MissingBearerTokenException ex, WebRequest request
     ){
         return new ExceptionResponse(
-                "Record not found",
+                "Bad request",
                 ex.getMessage()
         );
     }

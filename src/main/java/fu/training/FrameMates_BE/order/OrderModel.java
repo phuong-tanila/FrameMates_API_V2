@@ -19,6 +19,8 @@ public class OrderModel {
 
     private String status;
 
+    private String description;
+
     private java.sql.Timestamp paymentDate;
 
     private Integer totalPrice;

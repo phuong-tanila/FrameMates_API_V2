@@ -8,7 +8,10 @@ import fu.training.FrameMates_BE.orderdetail.OrderDetailService;
 import fu.training.FrameMates_BE.share.exceptions.InvalidStatusStringException;
 import fu.training.FrameMates_BE.share.exceptions.MissingBearerTokenException;
 import fu.training.FrameMates_BE.share.exceptions.RecordNotFoundException;
+import fu.training.FrameMates_BE.share.helpers.EnumConverter;
 import fu.training.FrameMates_BE.share.helpers.PaginationResponse;
+import fu.training.FrameMates_BE.slotbooking.SlotBooking;
+import fu.training.FrameMates_BE.slotbooking.SlotBookingService;
 import fu.training.FrameMates_BE.studio.Studio;
 import fu.training.FrameMates_BE.studio.StudioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +34,8 @@ public class  OrderService {
     private OrderDetailService orderDetailService;
     @Autowired
     public StudioService studioService;
+    @Autowired
+    public SlotBookingService slotBookingService;
     public OrderModel createOrder(OrderModel orderModel, Authentication authentication){
         if(authentication == null) throw new MissingBearerTokenException();
         var currentCustomer = (Account) authentication.getPrincipal();
@@ -50,7 +55,9 @@ public class  OrderService {
             var orderDetailEntity = orderDetailMapper.toEntity(orderDetailModel);
             orderDetailEntity.setOrder(createdOrder);
             orderDetails.add(orderDetailEntity);
-            totalPrice += orderDetailEntity.getPrice();
+            SlotBooking slotBooking = slotBookingService.getSlotBookingEntityById(orderDetailModel.getSlotBookingId());
+            orderDetailEntity.setSlotBooking(slotBooking);
+            totalPrice += slotBooking.getPrice();
             orderDetailService.createOrderDetails(orderDetailEntity);
         }
         creatingOrder.setTotalPrice(totalPrice);
@@ -96,6 +103,13 @@ public class  OrderService {
         if(!Objects.equals(order.getAccount().getAccountId(), currentAccount.getAccountId()))
             throw new RecordNotFoundException("You are not allowed to cancel this order!");
         order.setStatus(OrderStatus.CANCEL.ordinal());
+        orderRepository.save(order);
+    }
+
+    public void changeOrderStatus(int id, String status) {
+        Order order = orderRepository.findById(id).orElseThrow(() -> new RecordNotFoundException("Order id: " + id + " not found!!"));
+        var statusValue = EnumConverter.convertStringToEnumValue(status, OrderStatus.class);
+        order.setStatus(statusValue);
         orderRepository.save(order);
     }
 
