@@ -1,19 +1,15 @@
 package fu.training.FrameMates_BE.order;
 
-import fu.training.FrameMates_BE.account.Account;
 import fu.training.FrameMates_BE.account.AccountModel;
-import fu.training.FrameMates_BE.orderdetail.OrderDetail;
 import fu.training.FrameMates_BE.orderdetail.OrderDetailModel;
-import fu.training.FrameMates_BE.studio.Studio;
 import fu.training.FrameMates_BE.studio.StudioModel;
-import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Set;
-
-@Getter @Setter
-public class OrderModel {
+@Getter
+@Setter
+public class OrderModelIncludeStudio {
     private Integer orderId;
 
     private java.sql.Timestamp orderDate;
@@ -33,5 +29,7 @@ public class OrderModel {
     private AccountModel account;
 
     private Set<OrderDetailModel> orderDetails;
+
+    private StudioModel studio;
 
 }

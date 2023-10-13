@@ -66,15 +66,15 @@ public class  OrderService {
         return orderMapper.toModel(createdOrder);
     };
 
-    public List<OrderModel> getOrdersByCurrentCustomer(Account account){
+    public List<OrderModelIncludeStudio> getOrdersByCurrentCustomer(Account account){
         var orders = orderRepository.findByAccount_AccountId(account.getAccountId());
-        List<OrderModel> ordersModel = orders.stream().map(orderMapper::toModel).toList();
+        List<OrderModelIncludeStudio> ordersModel = orders.stream().map(orderMapper::toModelIncludeStudio).toList();
         return ordersModel;
     }
 
-    public List<OrderModel> getOrdersByCurrentStudio(Account account){
+    public List<OrderModelIncludeStudio> getOrdersByCurrentStudio(Account account){
         var orders = orderRepository.findByAccount_Studio_StudioId(account.getStudio().getStudioId());
-        List<OrderModel> ordersModel = orders.stream().map(orderMapper::toModel).toList();
+        List<OrderModelIncludeStudio> ordersModel = orders.stream().map(orderMapper::toModelIncludeStudio).toList();
         return ordersModel;
     }
     public OrderModel getOrderById(int id) {
@@ -87,7 +87,7 @@ public class  OrderService {
                 .orElseThrow(() -> new RuntimeException("Order id: " + id + " not found"));
     }
 
-    public List<OrderModel> getOrdersByCurrentUser(Authentication authentication) {
+    public List<OrderModelIncludeStudio> getOrdersByCurrentUser(Authentication authentication) {
         if(authentication == null) throw new MissingBearerTokenException();
         var currentUser = (Account) authentication.getPrincipal();
         if(currentUser.getRole().equals("CUS")){

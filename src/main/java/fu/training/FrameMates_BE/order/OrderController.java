@@ -50,7 +50,7 @@ public class OrderController {
         return ResponseEntity.ok(orderService.getOrderById(id));
     }
     @GetMapping
-    public ResponseEntity<List<OrderModel>> getOrdersByCurrentUser(
+    public ResponseEntity<List<OrderModelIncludeStudio>> getOrdersByCurrentUser(
             Authentication authentication
     ){
         return ResponseEntity.ok(orderService.getOrdersByCurrentUser(authentication));

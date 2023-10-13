@@ -19,9 +19,9 @@ public class StudioModel {
     private String address;
     @Size(min=1, max=500)
     private String description;
-    private Integer status;
+
     private Double totalRating;
-    private Integer balance;
+
     private Timestamp createDate;
     @Size(min=1, max=500)
     private String avatarStudio;
