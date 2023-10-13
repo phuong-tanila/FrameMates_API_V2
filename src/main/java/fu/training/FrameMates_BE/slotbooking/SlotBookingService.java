@@ -22,12 +22,14 @@ public class SlotBookingService {
         var currentAccount = (Account) authentication.getPrincipal();
         var currentStudio = currentAccount.getStudio();
         var date = model.getSlotDate();
+
         date.setHours(0);
         date.setMinutes(0);
         date.setSeconds(0);
         if(currentStudio == null) throw new RecordNotFoundException("You are not own a studio to do this feature");
         var entity = slotBookingMapper.fromCreateModelToEntity(model);
         entity.setStudio(currentStudio);
+        entity.setBookingStatus(SlotBookingStatus.AVAILABLE.ordinal());
         return slotBookingRepository.save(entity).getSlotId();
     }
 

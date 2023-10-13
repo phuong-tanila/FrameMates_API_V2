@@ -56,6 +56,12 @@ public class  OrderService {
             orderDetailEntity.setOrder(createdOrder);
             orderDetails.add(orderDetailEntity);
             SlotBooking slotBooking = slotBookingService.getSlotBookingEntityById(orderDetailModel.getSlotBookingId());
+
+            orderDetailEntity.setStartTime(slotBooking.getStartTime());
+            orderDetailEntity.setEndTime(slotBooking.getEndTime());
+            orderDetailEntity.setPrice(slotBooking.getPrice());
+
+
             orderDetailEntity.setSlotBooking(slotBooking);
             totalPrice += slotBooking.getPrice();
             orderDetailService.createOrderDetails(orderDetailEntity);

@@ -21,4 +21,6 @@ public class SlotBookingModel {
     private Date SlotDate;
 
     private boolean booked;
+
+    private String bookingStatus;
 }

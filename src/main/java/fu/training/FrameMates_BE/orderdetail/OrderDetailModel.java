@@ -1,5 +1,6 @@
 package fu.training.FrameMates_BE.orderdetail;
 
+import fu.training.FrameMates_BE.slotbooking.SlotBookingModel;
 import jakarta.persistence.Column;
 import lombok.Data;
 
