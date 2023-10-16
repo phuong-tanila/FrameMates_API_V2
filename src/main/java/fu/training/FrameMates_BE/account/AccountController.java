@@ -41,6 +41,15 @@ public class AccountController {
         accountService.createCustomer(customer);
         return new ResponseEntity(HttpStatus.CREATED);
     }
+    @PatchMapping("/customer")
+    public ResponseEntity updateCustomer(
+        Authentication authentication,
+        @RequestBody AccountModel customer
+    ){
+        accountService.updateCustomer(customer, authentication);
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping("/confirm-password")
     public ResponseEntity create(
             @RequestBody String password,

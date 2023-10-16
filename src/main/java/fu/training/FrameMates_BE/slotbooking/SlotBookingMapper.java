@@ -6,12 +6,17 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.mapstruct.NullValuePropertyMappingStrategy;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.time.format.DateTimeFormatter;
 
 @Mapper(
         componentModel = "spring",
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
 )
 public interface SlotBookingMapper {
+//    @Autowired
+//    private DateTimeFormatter dateTimeFormatter;
     SlotBookingModel toModels(SlotBooking entity);
 
     @Mapping(source = "slotId", target = "slotId", ignore = true)
@@ -24,4 +29,5 @@ public interface SlotBookingMapper {
     default String statusEnumToString(int status) {
         return EnumConverter.convertEnumValueToString(status, SlotBookingStatus.class);
     }
+
 }

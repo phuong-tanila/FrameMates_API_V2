@@ -38,9 +38,7 @@ public class SlotBookingController {
         Date parsedSlotDate = null;
         if(slotDate != null){
             parsedSlotDate = new SimpleDateFormat("yyyy-MM-dd").parse(slotDate);
-            parsedSlotDate.setHours(0);
-            parsedSlotDate.setMinutes(0);
-            parsedSlotDate.setSeconds(0);
+            parsedSlotDate = new Date(parsedSlotDate.getYear(), parsedSlotDate.getMonth(), parsedSlotDate.getDate());
         }
         return ResponseEntity.ok(slotBookingService.getBookingSlotsByDate(studioId, parsedSlotDate));
     }

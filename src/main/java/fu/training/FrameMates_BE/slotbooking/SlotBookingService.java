@@ -8,6 +8,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
+import java.time.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -35,14 +37,21 @@ public class SlotBookingService {
 
     public List<SlotBookingModel> getBookingSlotsByDate(int studioId, java.util.Date slotDate) {
         List<SlotBooking> slotBooking;
-        System.out.println(slotDate);
-        if(slotDate != null)
+        if(slotDate != null){
+            setEndOfDay(slotDate);
+            System.out.println(slotDate);
             slotBooking = slotBookingRepository.findAllByStudio_StudioIdAndSlotDate(studioId, slotDate);
+//        return new ArrayList<>();
+        }
         else
             slotBooking = slotBookingRepository.findAllByStudio_StudioId(studioId);
         return slotBooking.stream().map(slotBookingMapper::toModel).toList();
     }
-
+    private void setEndOfDay(java.util.Date date){
+        date.setHours(23);
+        date.setMinutes(59);
+        date.setSeconds(59);
+    }
     public SlotBooking getSlotBookingEntityById(int slotBookingId) {
         return slotBookingRepository.findById(slotBookingId)
                 .orElseThrow(() -> new RecordNotFoundException("Slot booking id: " + slotBookingId + " not found"));

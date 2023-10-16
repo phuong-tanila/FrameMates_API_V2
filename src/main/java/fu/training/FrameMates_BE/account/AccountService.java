@@ -86,4 +86,13 @@ public class AccountService implements UserDetailsService {
         var currentUser = (Account) authentication.getPrincipal();
         return accountMapper.toModel(currentUser);
     }
+
+    public void updateCustomer(AccountModel model, Authentication authentication) {
+        var currentUser = (Account) authentication.getPrincipal();
+        currentUser.setAvatar(model.getAvatar());
+        currentUser.setFullName(model.getFullName());
+        currentUser.setPassword(passwordEncoder.encode(model.getPassword()));
+//        currentUser.set?;
+        accountRepository.save(currentUser);
+    }
 }
