@@ -27,10 +27,16 @@ public class OrderDetailController {
         orderDetailService.createFeedBack(orderDetailId, authentication, model);
         return ResponseEntity.ok().build();
     }
-    @GetMapping("/current-studio")
-    public ResponseEntity<List<OrderDetailModel>> getFeedbackByCurrentStudio(
-        Authentication authentication
+    @GetMapping("/current")
+    public ResponseEntity<List<OrderDetailModel>> getOrderDetailsByCurrentAccount(
+            Authentication authentication
     ){
-        return ResponseEntity.ok(orderDetailService.getFeedbackByCurrentStudio(authentication));
+        return ResponseEntity.ok(orderDetailService.getOrderDetailByCurrentUser(authentication));
+    }
+    @GetMapping("/studio/{id}")
+    public ResponseEntity<List<OrderDetailModel>> getOrderDetailsByStudioId(
+            @PathVariable int id
+    ){
+        return ResponseEntity.ok(orderDetailService.getOrderDetailByStudioId(id));
     }
 }

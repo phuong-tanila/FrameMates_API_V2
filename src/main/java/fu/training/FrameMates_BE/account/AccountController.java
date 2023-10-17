@@ -37,7 +37,7 @@ public class AccountController {
     }
 
     @PostMapping("/customer")
-    public ResponseEntity createCustomer(@RequestBody @Valid AccountModel customer) throws JsonProcessingException, DupplicatedUserInfoException {
+    public ResponseEntity createCustomer(@RequestBody @Valid AccountModel customer) throws DupplicatedUserInfoException {
         accountService.createCustomer(customer);
         return new ResponseEntity(HttpStatus.CREATED);
     }

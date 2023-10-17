@@ -54,4 +54,14 @@ public class OrderDetailService {
                 return feedbackList.stream().map(mapper::toModel).toList();
 
     }
+
+    public List<OrderDetailModel> getOrderDetailByCurrentUser(Authentication authentication){
+        var currentUser = (Account) authentication.getPrincipal();
+        return repository.findAllByOrder_Account_AccountId(currentUser.getAccountId()).stream().map(mapper::toModel).toList();
+    }
+
+    public List<OrderDetailModel> getOrderDetailByStudioId(int studioId) {
+        return repository.findAllByOrder_Studio_StudioIdAndRatingNotNull(studioId).stream().map(mapper::toModel)
+                .toList();
+    }
 }
