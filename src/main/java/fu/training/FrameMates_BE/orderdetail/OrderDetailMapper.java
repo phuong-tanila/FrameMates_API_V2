@@ -15,4 +15,9 @@ public interface OrderDetailMapper {
 
     OrderDetail toEntity(OrderDetailModel orderDetailModel);
     OrderDetailModel toModel(OrderDetail orderDetail);
+
+    @Mapping(source = "order.account.avatar", target = "userAvatar")
+    @Mapping(target = "userId", source = "order.account.accountId")
+    @Mapping(target = "userName", source = "order.account.fullName")
+    FeedbackModel toFeedbackModel(OrderDetail orderDetail);
 }

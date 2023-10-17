@@ -34,7 +34,7 @@ public class OrderDetailController {
         return ResponseEntity.ok(orderDetailService.getOrderDetailByCurrentUser(authentication));
     }
     @GetMapping("/studio/{id}")
-    public ResponseEntity<List<OrderDetailModel>> getOrderDetailsByStudioId(
+    public ResponseEntity<List<FeedbackModel>> getOrderDetailsByStudioId(
             @PathVariable int id
     ){
         return ResponseEntity.ok(orderDetailService.getOrderDetailByStudioId(id));
