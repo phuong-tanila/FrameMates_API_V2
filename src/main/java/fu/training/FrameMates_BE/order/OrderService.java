@@ -79,7 +79,8 @@ public class  OrderService {
     }
 
     public List<OrderModelIncludeStudio> getOrdersByCurrentStudio(Account account){
-        var orders = orderRepository.findByAccount_Studio_StudioId(account.getStudio().getStudioId());
+        var orders = orderRepository.findAllByStudio_StudioId(account.getStudio().getStudioId());
+        System.out.println(account.getStudio().getStudioId());
         List<OrderModelIncludeStudio> ordersModel = orders.stream().map(orderMapper::toModelIncludeStudio).toList();
         return ordersModel;
     }
