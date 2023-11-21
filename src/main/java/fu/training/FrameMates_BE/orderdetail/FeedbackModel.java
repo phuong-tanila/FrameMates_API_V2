@@ -3,6 +3,8 @@ package fu.training.FrameMates_BE.orderdetail;
 import lombok.Data;
 import lombok.Setter;
 
+import java.time.LocalTime;
+
 @Data
 public class FeedbackModel {
     private Integer orderDetailId;
@@ -19,9 +21,9 @@ public class FeedbackModel {
 
     private java.sql.Timestamp postDate;
 
-    private java.sql.Timestamp startTime;
+    private LocalTime startTime;
 
-    private java.sql.Timestamp endTime;
+    private LocalTime endTime;
 
     private String userName;
 

@@ -26,8 +26,7 @@ public class FrameMatesBeApplication {
 				registry
 						.addMapping("/api/**")
 						.allowedOrigins(
-								"http://localhost:50079",
-								"http://localhost:3000/"
+								"*"
 						);
 			}
 		};

@@ -1,5 +1,6 @@
 package fu.training.FrameMates_BE.slotbooking;
 import java.io.Serializable;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 
@@ -34,10 +35,10 @@ public class SlotBooking extends SoftDeleteEntity implements Serializable {
 	private Integer slotId;
 	
 	@Column(name="start_time")
-	private java.sql.Timestamp startTime;
+	private LocalTime startTime;
 	
 	@Column(name="end_time")
-	private java.sql.Timestamp endTime;
+	private LocalTime endTime;
 	
 	@Column(name="price")
 	private Integer price;

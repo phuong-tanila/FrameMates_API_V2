@@ -64,13 +64,13 @@ public class AccountService implements UserDetailsService {
             throw new DupplicatedUserInfoException(errorMessages.toArray(new String[0]));
         }
     }
-    private void createAccount(AccountModel accountModel){
+    public Account createAccount(AccountModel accountModel){
         accountModel.setPassword(passwordEncoder.encode(accountModel.getPassword()));
         var account = accountMapper.fromCreateModelToEntity(accountModel);
         validateAccount(account);
         account.setCreateDate(new Timestamp(System.currentTimeMillis()));
         account.setDeleted(false);
-        accountRepository.save(account);
+        return accountRepository.save(account);
     }
     public void createCustomer(AccountModel customer) {
         customer.setRole("CUS");

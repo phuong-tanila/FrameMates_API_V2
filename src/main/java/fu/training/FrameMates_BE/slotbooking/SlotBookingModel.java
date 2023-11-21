@@ -4,6 +4,7 @@ package fu.training.FrameMates_BE.slotbooking;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalTime;
 import java.util.Date;
 
 @Getter
@@ -12,9 +13,9 @@ public class SlotBookingModel {
 
     private Integer slotId;
 
-    private java.sql.Timestamp startTime;
+    private LocalTime startTime;
 
-    private java.sql.Timestamp endTime;
+    private LocalTime endTime;
 
     private Integer price;
 

@@ -1,6 +1,7 @@
 package fu.training.FrameMates_BE.studio;
 
 import fu.training.FrameMates_BE.account.Account;
+import fu.training.FrameMates_BE.account.AccountService;
 import fu.training.FrameMates_BE.share.exceptions.RecordNotFoundException;
 import fu.training.FrameMates_BE.share.helpers.PaginationResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,16 @@ public class StudioService {
     @Autowired
     private StudioRepository studioRepository;
     @Autowired
+    private AccountService accountService;
+    @Autowired
     private StudioMapper studioMapper;
     public Studio getById(int studioId){
         return studioRepository.findByStudioIdAndDeleted(studioId, false).orElseThrow(() -> new RecordNotFoundException("Studio id: " + studioId + "not found"));
     }
 
-    public int createStudio(StudioModel model, Authentication authentication) {
-        var currentUser = (Account)authentication.getPrincipal();
+    public int createStudio(StudioModel model) {
+        var currentUser = accountService.createAccount(model.getOwner());
+        currentUser.setRole("OWNER");
         var studioEntity = studioMapper.fromCreateModelToEntity(model);
         studioEntity.setOwner(currentUser);
         studioEntity.setTotalRating((float) 0);

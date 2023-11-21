@@ -42,6 +42,10 @@ public class SlotBookingController {
         }
         return ResponseEntity.ok(slotBookingService.getBookingSlotsByDate(studioId, parsedSlotDate));
     }
+    @GetMapping("/current")
+    public ResponseEntity<List<SlotBookingModel>> getSlotBookingByCurrentStudio(Authentication authentication){
+        return ResponseEntity.ok(slotBookingService.getBookingSlotsByCurrentStudio(authentication));
+    };
 
 
 }

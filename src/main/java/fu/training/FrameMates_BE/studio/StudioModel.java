@@ -1,6 +1,7 @@
 package fu.training.FrameMates_BE.studio;
 
 
+import fu.training.FrameMates_BE.account.AccountModel;
 import fu.training.FrameMates_BE.slotbooking.SlotBooking;
 import fu.training.FrameMates_BE.slotbooking.SlotBookingModel;
 import jakarta.validation.constraints.Size;
@@ -29,6 +30,8 @@ public class StudioModel {
     private String coverImage;
 
     private Boolean deleted;
+
+    private AccountModel owner;
 
     private Set<SlotBookingModel> slotBookings;
 

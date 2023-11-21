@@ -1,5 +1,6 @@
 package fu.training.FrameMates_BE.orderdetail;
 import java.io.Serializable;
+import java.time.LocalTime;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import fu.training.FrameMates_BE.order.Order;
@@ -35,10 +36,10 @@ public class OrderDetail implements Serializable {
 	private Integer price;
 	
 	@Column(name="start_time")
-	private java.sql.Timestamp startTime;
+	private LocalTime startTime;
 	
 	@Column(name="end_time")
-	private java.sql.Timestamp endTime;
+	private LocalTime endTime;
 	
 	@Column(name="content", length=Integer.MAX_VALUE)
 	private String content;

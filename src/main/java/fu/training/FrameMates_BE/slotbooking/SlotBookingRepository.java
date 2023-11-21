@@ -14,7 +14,7 @@ import java.util.List;
 
 @Repository
 public interface SlotBookingRepository extends JpaRepository<SlotBooking, Integer> {
-    @Query("select sl from SlotBooking sl where sl.studio.studioId = :studioId and date(:slotDate) = date(sl.slotDate) ")
+    @Query("select sl from SlotBooking sl where sl.studio.studioId = :studioId and cast(:slotDate as date) = cast(sl.slotDate as date) ")
     List<SlotBooking> findAllByStudio_StudioIdAndSlotDate(int studioId, Date slotDate);
 
     List<SlotBooking> findAllByStudio_StudioId(int studioId);

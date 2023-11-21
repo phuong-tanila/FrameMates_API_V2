@@ -4,6 +4,8 @@ import fu.training.FrameMates_BE.slotbooking.SlotBookingModel;
 import jakarta.persistence.Column;
 import lombok.Data;
 
+import java.time.LocalTime;
+
 @Data
 public class OrderDetailModel {
 
@@ -21,8 +23,10 @@ public class OrderDetailModel {
 
     private java.sql.Timestamp postDate;
 
-    private java.sql.Timestamp startTime;
+    private LocalTime startTime;
 
-    private java.sql.Timestamp endTime;
+    private LocalTime endTime;
+
+    private SlotBookingModel slotBooking;
 
 }

@@ -1,6 +1,7 @@
 package fu.training.FrameMates_BE.slotbooking;
 
 import fu.training.FrameMates_BE.account.Account;
+import fu.training.FrameMates_BE.share.exceptions.MissingBearerTokenException;
 import fu.training.FrameMates_BE.share.exceptions.RecordNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class SlotBookingService {
         if(currentStudio == null) throw new RecordNotFoundException("You are not own a studio to do this feature");
         var entity = slotBookingMapper.fromCreateModelToEntity(model);
         entity.setStudio(currentStudio);
-        entity.setBookingStatus(SlotBookingStatus.AVAILABLE.ordinal());
+//        entity.setBookingStatus(SlotBookingStatus.AVAILABLE.ordinal());
         return slotBookingRepository.save(entity).getSlotId();
     }
 
@@ -55,5 +56,14 @@ public class SlotBookingService {
     public SlotBooking getSlotBookingEntityById(int slotBookingId) {
         return slotBookingRepository.findById(slotBookingId)
                 .orElseThrow(() -> new RecordNotFoundException("Slot booking id: " + slotBookingId + " not found"));
+    }
+
+    public List<SlotBookingModel> getBookingSlotsByCurrentStudio(Authentication authentication) {
+        if(authentication != null){
+            var currentAccount = (Account) authentication.getPrincipal();
+            var currentStudio = currentAccount.getStudio();
+            return getBookingSlotsByDate(currentStudio.getStudioId(), null);
+        }
+        throw new MissingBearerTokenException();
     }
 }

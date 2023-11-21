@@ -1,6 +1,7 @@
 package fu.training.FrameMates_BE.studio;
 
 import fu.training.FrameMates_BE.account.Account;
+import fu.training.FrameMates_BE.share.exceptions.RecordNotFoundException;
 import fu.training.FrameMates_BE.share.helpers.PaginationHelper;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -23,18 +24,24 @@ import java.util.List;
 public class StudioController {
     @Autowired
     private StudioService studioService;
-    @PreAuthorize("hasRole('ROLE_CUS')")
+//    @PreAuthorize("hasRole('ROLE_CUS')")
     @PostMapping
     public ResponseEntity createStudio(
-            @RequestBody  StudioModel model,
-            Authentication authentication
+            @RequestBody  StudioModel model
+//            Authentication authentication
     ) throws URISyntaxException {
-        int studioId = studioService.createStudio(model, authentication);
+        int studioId = studioService.createStudio(model);
         return ResponseEntity.created(new URI("/api/studios/" + studioId)).build();
     }
 
     @GetMapping
     public ResponseEntity<List<StudioModel>> getAllStudio(){
         return ResponseEntity.ok(studioService.getAllStudioNotDeleted());
+    }
+    @GetMapping("{id}")
+    public ResponseEntity<StudioModel> getAllStudio(
+            @PathVariable int id
+    ){
+        return ResponseEntity.ok(studioService.getAllStudioNotDeleted().stream().filter(s -> s.getStudioId() == id).findFirst().orElseThrow(() -> new RecordNotFoundException("Can find studio with id: " + id)));
     }
 }
