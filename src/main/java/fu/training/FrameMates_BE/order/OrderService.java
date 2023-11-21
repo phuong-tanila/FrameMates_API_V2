@@ -97,7 +97,7 @@ public class  OrderService {
     public List<OrderModelIncludeStudio> getOrdersByCurrentUser(Authentication authentication) {
         if(authentication == null) throw new MissingBearerTokenException();
         var currentUser = (Account) authentication.getPrincipal();
-        if(currentUser.getRole().equals("CUS")){
+        if(currentUser.getRole().equals("ROLE_CUSTOMER")){
             return getOrdersByCurrentCustomer(currentUser);
         }
         return getOrdersByCurrentStudio(currentUser);
