@@ -35,7 +35,7 @@ public class AccountController {
         String refreshToken = jwtService.generateToken(TokenType.REFRESHTOKEN, (Account) authentication.getPrincipal());
         return new ResponseEntity<TokenResponse>(new TokenResponse(accessToken, refreshToken), HttpStatus.OK);
     }
-
+//    @GetMapping("/count")
     @PostMapping("/customer")
     public ResponseEntity createCustomer(@RequestBody @Valid AccountModel customer) throws DupplicatedUserInfoException {
         accountService.createCustomer(customer);

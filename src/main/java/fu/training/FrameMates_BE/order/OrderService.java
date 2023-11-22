@@ -94,13 +94,21 @@ public class  OrderService {
                 .orElseThrow(() -> new RuntimeException("Order id: " + id + " not found"));
     }
 
+    public List<OrderModelIncludeStudio> getAllOrder(){
+        return orderRepository.findAll().stream().map(orderMapper::toModelIncludeStudio).toList();
+    }
+
     public List<OrderModelIncludeStudio> getOrdersByCurrentUser(Authentication authentication) {
         if(authentication == null) throw new MissingBearerTokenException();
         var currentUser = (Account) authentication.getPrincipal();
         if(currentUser.getRole().equals("ROLE_CUSTOMER")){
             return getOrdersByCurrentCustomer(currentUser);
+        }else if(currentUser.getRole().equals("ROLE_EMPLOYEE")){
+            return getOrdersByCurrentStudio(currentUser);
         }
-        return getOrdersByCurrentStudio(currentUser);
+        else {
+            return getAllOrder();
+        }
     }
 
     public void cancelOrder(int orderId, Authentication authentication) {

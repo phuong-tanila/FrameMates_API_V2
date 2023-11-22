@@ -51,7 +51,13 @@ public class JwtService {
     public String generateToken(TokenType tokenTypeEnum, UserDetails userDetails){
 
         if(TokenType.ACCESSTOKEN == tokenTypeEnum){
-            return generateToken(extraClaims, userDetails, accessTokenExpiration, accessTokenSecretKey);
+            var user = (Account) userDetails;
+            var userExtraClaims = new HashMap<String, Object>();
+            userExtraClaims.put("avatar", user.getAvatar());
+//            userExtraClaims.put("role", user.getRole().replace("ROLE_",""));
+            userExtraClaims.put("fullName", user.getFullName());
+
+            return generateToken(userExtraClaims, userDetails, accessTokenExpiration, accessTokenSecretKey);
         }
         return generateToken(new HashMap<>(), userDetails, refreshTokenExpiration, refreshTokenSecretKey);
     }
