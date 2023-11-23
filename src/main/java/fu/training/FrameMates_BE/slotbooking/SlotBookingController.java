@@ -17,6 +17,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
+@CrossOrigin
 @RequestMapping("api/slot-bookings")
 public class SlotBookingController {
     @Autowired

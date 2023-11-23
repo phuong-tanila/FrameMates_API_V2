@@ -21,6 +21,7 @@ import java.util.List;
 @RestController
 @Slf4j
 @RequestMapping("/api/studios")
+@CrossOrigin
 public class StudioController {
     @Autowired
     private StudioService studioService;
