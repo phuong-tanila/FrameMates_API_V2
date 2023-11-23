@@ -35,11 +35,11 @@ public class FrameMatesBeApplication {
 		};
 
 	}
-	@Bean
-	public FilterRegistrationBean corsFilter() {
-		FilterRegistrationBean registration = new FilterRegistrationBean();
-		registration.setFilter(new CorsFilter());
-		registration.addUrlPatterns("/*");
-		return registration;
-	}
+//	@Bean
+//	public FilterRegistrationBean corsFilter() {
+//		FilterRegistrationBean registration = new FilterRegistrationBean();
+//		registration.setFilter(new CorsFilter());
+//		registration.addUrlPatterns("/*");
+//		return registration;
+//	}
 }
