@@ -26,8 +26,8 @@ public class FrameMatesBeApplication {
 				registry
 						.addMapping("/api/**")
 						.allowedOrigins(
-								"*"
-						);
+								"**"
+						).allowedMethods("*");
 			}
 		};
 	}
