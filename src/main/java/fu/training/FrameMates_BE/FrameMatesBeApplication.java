@@ -18,17 +18,18 @@ public class FrameMatesBeApplication {
 	public PasswordEncoder passwordEncoder(){
 		return new BCryptPasswordEncoder();
 	}
-//	@Bean
-//	public WebMvcConfigurer corsConfigurer() {
-//		return new WebMvcConfigurer() {
-//			@Override
-//			public void addCorsMappings(CorsRegistry registry) {
-//				registry
-//						.addMapping("/api/**")
-//						.allowedOrigins(
-//								"**"
-//						).allowedMethods("*");
-//			}
-//		};
-//	}
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry
+						.addMapping("/**")
+						.allowedOrigins(
+								"**"
+						).allowedOrigins("https://framemates.io.vn", "https://studio.framemates.io.vn/")
+						.allowedMethods("*");
+			}
+		};
+	}
 }
