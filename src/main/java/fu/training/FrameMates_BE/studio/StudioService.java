@@ -49,7 +49,10 @@ public class StudioService {
 
     public List<StudioModel> getAllStudioNotDeleted() {
         var list = studioRepository.getAllByDeleted(false);
-        list.forEach(s -> s.setSlotBookings(null));
         return list.stream().map(studioMapper::toModel).toList();
+    }
+    public List<StudioMininumModel> getAllStudioMinimumModelNotDeleted() {
+        var list = studioRepository.getAllByDeleted(false);
+        return list.stream().map(studioMapper::toMinimunModel).toList();
     }
 }

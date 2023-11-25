@@ -16,5 +16,6 @@ public interface StudioMapper {
     @Mapping(source = "studioId", target = "studioId", ignore = true)
     Studio fromCreateModelToEntity(StudioModel model);
 
+    StudioMininumModel toMinimunModel(Studio studio);
     StudioModel toModel(Studio studio);
 }

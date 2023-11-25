@@ -36,13 +36,13 @@ public class StudioController {
     }
 
     @GetMapping
-    public ResponseEntity<List<StudioModel>> getAllStudio(){
-        return ResponseEntity.ok(studioService.getAllStudioNotDeleted());
+    public ResponseEntity<List<StudioMininumModel>> getAllStudio(){
+        return ResponseEntity.ok(studioService.getAllStudioMinimumModelNotDeleted());
     }
     @GetMapping("{id}")
-    public ResponseEntity<StudioModel> getAllStudio(
+    public ResponseEntity<StudioMininumModel> getAllStudio(
             @PathVariable int id
     ){
-        return ResponseEntity.ok(studioService.getAllStudioNotDeleted().stream().filter(s -> s.getStudioId() == id).findFirst().orElseThrow(() -> new RecordNotFoundException("Can find studio with id: " + id)));
+        return ResponseEntity.ok(studioService.getAllStudioMinimumModelNotDeleted().stream().filter(s -> s.getStudioId() == id).findFirst().orElseThrow(() -> new RecordNotFoundException("Can find studio with id: " + id)));
     }
 }
